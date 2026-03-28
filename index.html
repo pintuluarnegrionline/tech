@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>tech | update informasi seputar teknologi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #00ff88;
+      --accent2: #ff3cac;
+      --accent3: #7b5ea7;
+      --text: #e8e8f0;
+      --muted: #5a5a72;
+      --card: #14141f;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.4;
+    }
+
+    /* HEADER */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(10,10,15,0.92);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: -0.03em;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .logo span { color: var(--text); }
+
+    nav {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      padding: 5rem 2rem 3rem;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-tag {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      animation: fadeUp 0.6s 0.1s ease both;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 0.85rem;
+      line-height: 1.8;
+      max-width: 560px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-line {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent) 0%, transparent 60%);
+      margin: 2.5rem 0;
+      animation: fadeUp 0.6s 0.25s ease both;
+    }
+
+    /* TICKER */
+    .ticker-wrap {
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 0.6rem 0;
+      margin-bottom: 3rem;
+      background: var(--surface);
+    }
+    .ticker {
+      display: flex;
+      width: max-content;
+      animation: ticker 30s linear infinite;
+      gap: 3rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .ticker span { color: var(--accent); margin-right: 0.5rem; }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* GRID */
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 2rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1px;
+      max-width: 900px;
+      margin: 0 auto 4rem;
+      padding: 0 2rem;
+      background: var(--border);
+    }
+
+    .card {
+      background: var(--card);
+      padding: 1.6rem;
+      cursor: pointer;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 0.5s ease both;
+    }
+    .card:hover { background: #1a1a28; }
+    .card:hover .card-arrow { color: var(--accent); transform: translate(2px, -2px); }
+
+    .card-cat {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 0.8rem;
+    }
+    .card-cat.ai { color: var(--accent); }
+    .card-cat.gadget { color: #f5a623; }
+    .card-cat.net { color: #5b9cf6; }
+
+    .card h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.8rem;
+    }
+
+    .card p {
+      font-size: 0.75rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+
+    .card-arrow {
+      font-size: 1rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    /* FEATURED */
+    .featured {
+      max-width: 900px;
+      margin: 0 auto 1px;
+      padding: 0 2rem;
+    }
+    .featured-card {
+      background: var(--card);
+      padding: 2.5rem;
+      border-left: 3px solid var(--accent);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+      margin-bottom: 1px;
+      cursor: pointer;
+      transition: background 0.2s;
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+    .featured-card:hover { background: #1a1a28; }
+
+    .featured-tag {
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .featured-tag::before {
+      content: '▶';
+      font-size: 0.5rem;
+    }
+
+    .featured-card h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.5rem;
+      line-height: 1.2;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .featured-card p {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .featured-visual {
+      background: linear-gradient(135deg, #111118 0%, #1a1a2e 50%, #0d0d1a 100%);
+      border: 1px solid var(--border);
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 4rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.05em;
+      position: relative;
+      overflow: hidden;
+    }
+    .featured-visual::before {
+      content: 'AI';
+      position: absolute;
+      font-size: 8rem;
+      opacity: 0.05;
+      color: var(--accent);
+    }
+    .featured-visual-2 { color: #5b9cf6; }
+    .featured-visual-2::before { color: #5b9cf6; content: '6G'; }
+    .featured-visual-3 { color: #f5a623; }
+    .featured-visual-3::before { color: #f5a623; content: 'Q'; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* ANIMS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      .featured-card { grid-template-columns: 1fr; }
+      nav { display: none; }
+      .hero h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a class="logo" href="#">⬡ <span>tech</span></a>
+  <nav>
+    <a href="#">Terbaru</a>
+    <a href="#">AI</a>
+    <a href="#">Gadget</a>
+    <a href="#">Internet</a>
+    <a href="#">Tentang</a>
+  </nav>
+</header>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>●</span> Samsung Galaxy AI 2026 &nbsp;&nbsp;
+    <span>●</span> Quantum Computing IBM &nbsp;&nbsp;
+    <span>●</span> CES 2026: Robot & AI &nbsp;&nbsp;
+    <span>●</span> 6G Edge Computing &nbsp;&nbsp;
+    <span>●</span> OPPO A6X Rilis Indonesia &nbsp;&nbsp;
+    <span>●</span> iPhone 17e Spesifikasi &nbsp;&nbsp;
+    <span>●</span> AMD Ryzen 7 9850X3D &nbsp;&nbsp;
+    <span>●</span> Nvidia DLSS 4.5 &nbsp;&nbsp;
+    <span>●</span> Samsung Galaxy AI 2026 &nbsp;&nbsp;
+    <span>●</span> Quantum Computing IBM &nbsp;&nbsp;
+    <span>●</span> CES 2026: Robot & AI &nbsp;&nbsp;
+    <span>●</span> 6G Edge Computing &nbsp;&nbsp;
+    <span>●</span> OPPO A6X Rilis Indonesia &nbsp;&nbsp;
+    <span>●</span> iPhone 17e Spesifikasi &nbsp;&nbsp;
+    <span>●</span> AMD Ryzen 7 9850X3D &nbsp;&nbsp;
+    <span>●</span> Nvidia DLSS 4.5 &nbsp;&nbsp;
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Update · Maret 2026</div>
+  <h1>update informasi<br/>seputar <em>teknologi</em></h1>
+  <p>Berita terkini, ulasan gadget, dan inovasi teknologi dari Indonesia dan dunia — disajikan tanpa basa-basi.</p>
+  <div class="hero-line"></div>
+</div>
+
+<!-- FEATURED -->
+<div class="section-label">Pilihan Utama</div>
+<div class="featured" style="padding-bottom:1px;">
+
+  <div class="featured-card">
+    <div>
+      <div class="featured-tag">AI · Trending</div>
+      <h2>AI Generatif Jadi Tulang Punggung Bisnis di 2026</h2>
+      <p>Lebih dari 70% transformasi digital kini diperkuat oleh AI. Dari pemasaran otomatis hingga pengambilan keputusan strategis — era Adaptive AI telah tiba.</p>
+    </div>
+    <div class="featured-visual">🤖</div>
+  </div>
+
+  <div class="featured-card">
+    <div class="featured-visual featured-visual-2">📡</div>
+    <div>
+      <div class="featured-tag" style="color: #5b9cf6;">Infrastruktur · 6G</div>
+      <h2>6G & Edge Computing: Internet Tanpa Batas Latensi</h2>
+      <p>Ekosistem IoT yang disokong 6G memungkinkan perangkat lebih otonom — dari rumah pintar hingga kota cerdas yang responsif secara real-time.</p>
+    </div>
+  </div>
+
+  <div class="featured-card">
+    <div>
+      <div class="featured-tag" style="color: #f5a623;">Quantum · IBM</div>
+      <h2>Quantum Computing: Tonggak Sejarah Komputasi Modern</h2>
+      <p>IBM memprediksi 2026 sebagai tahun pertama komputer kuantum melampaui komputer klasik — membuka era baru di riset obat, material sains, dan keuangan.</p>
+    </div>
+    <div class="featured-visual featured-visual-3">⚛️</div>
+  </div>
+
+</div>
+
+<!-- CARD GRID -->
+<div class="section-label" style="margin-top:2rem;">Berita Terkini</div>
+<div class="grid">
+
+  <div class="card" style="animation-delay:0.05s">
+    <div class="card-cat gadget">Gadget</div>
+    <h2>Samsung Galaxy S26: Layar Lipat Tanpa Garis Tengah</h2>
+    <p>Samsung pamerkan prototipe OLED lipat terbaru di CES 2026 — tanpa crease, lebih tahan lama, dan desain premium.</p>
+    <div class="card-meta">
+      <span>Jan 2026</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.1s">
+    <div class="card-cat ai">AI</div>
+    <h2>Kulkas AI Google Gemini: Era Dapur Cerdas</h2>
+    <p>Kulkas terbaru dengan AI Vision mampu mengenali isi kulkas dan merekomendasikan belanjaan — tanpa pencatatan manual.</p>
+    <div class="card-meta">
+      <span>Jan 2026</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.15s">
+    <div class="card-cat gadget">Gadget</div>
+    <h2>AMD Ryzen 7 9850X3D: Prosesor Gaming Tercepat</h2>
+    <p>AMD hadir di CES 2026 dengan Ryzen 7 9850X3D — kecepatan clock 400 MHz lebih tinggi dari pendahulunya.</p>
+    <div class="card-meta">
+      <span>Jan 2026</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.2s">
+    <div class="card-cat net">Internet</div>
+    <h2>Blockchain untuk Identitas Digital & Rantai Pasok</h2>
+    <p>Teknologi blockchain kini melampaui keuangan — digunakan untuk manajemen rantai pasok, kontrak pintar, dan SSI.</p>
+    <div class="card-meta">
+      <span>Feb 2026</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.25s">
+    <div class="card-cat ai">AI</div>
+    <h2>Agentic AI: Komposisi Model Jadi Senjata Baru Bisnis</h2>
+    <p>IBM prediksi persaingan bukan lagi soal model AI, melainkan orkestrasi sistem — kombinasi model kecil dan besar yang kooperatif.</p>
+    <div class="card-meta">
+      <span>Mar 2026</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.3s">
+    <div class="card-cat gadget">Gadget</div>
+    <h2>ASUS Zenbook S14 OLED 2026: Laptop AI Ultra Tipis</h2>
+    <p>ASUS hadirkan Zenbook S14 OLED dengan prosesor Intel Core Ultra Seri 3 — laptop AI paling tipis pertama di Indonesia.</p>
+    <div class="card-meta">
+      <span>Mar 2026</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.35s">
+    <div class="card-cat">Robotika</div>
+    <h2>Robot & Drone Memasuki Sektor Publik & Pertanian</h2>
+    <p>Cobot, drone, dan robot layanan kini semakin meluas — dari manufaktur, pertanian, restoran, hingga layanan publik.</p>
+    <div class="card-meta">
+      <span>Feb 2026</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.4s">
+    <div class="card-cat net">Internet</div>
+    <h2>Nvidia DLSS 4.5: Multi Frame Generation 6X</h2>
+    <p>Nvidia perkenalkan DLSS 4.5 dengan peningkatan stabilitas temporal dan pengurangan artefak visual untuk gaming lebih imersif.</p>
+    <div class="card-meta">
+      <span>Jan 2026</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </div>
+
+  <div class="card" style="animation-delay:0.45s">
+    <div class="card-cat ai">AI</div>
+    <h2>Wearable Tech: Pantau Kesehatan Real-Time di 2026</h2>
+    <p>Wearable generasi terbaru mampu memantau detak jantung, gula darah, dan kualitas tidur — bahkan memberikan peringatan dini kesehatan.</p>
+    <div class="card-meta">
+      <span>Feb 2026</span>
+      <span class="card-arrow">↗</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <a href="#">tech</a> — update informasi seputar teknologi &nbsp;·&nbsp; Made with ♥ from Indonesia</p>
+</footer>
+
+</body>
+</html>
