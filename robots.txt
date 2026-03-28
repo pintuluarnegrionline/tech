@@ -1,0 +1,44 @@
+# robots.txt — pintuluarnegrionline.github.io/tech
+# Generated: 2026-03-28
+
+# === Semua crawler ===
+User-agent: *
+Allow: /tech/
+
+# Blokir path yang tidak perlu diindeks
+Disallow: /tech/draft/
+Disallow: /tech/admin/
+Disallow: /tech/private/
+Disallow: /tech/404/
+Disallow: /tech/search?
+
+# === Google ===
+User-agent: Googlebot
+Allow: /tech/
+Crawl-delay: 2
+
+# === Bing ===
+User-agent: Bingbot
+Allow: /tech/
+Crawl-delay: 5
+
+# === Yandex ===
+User-agent: YandexBot
+Allow: /tech/
+Crawl-delay: 10
+
+# === Blokir AI scrapers (opsional) ===
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+# === Sitemap ===
+Sitemap: https://pintuluarnegrionline.github.io/tech/sitemap.xml
